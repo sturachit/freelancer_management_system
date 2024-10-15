@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState(''); // New state for email
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // New state for confirm password
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-
-    // Simple validation to check if passwords match
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-
     localStorage.setItem('isAuthenticated', 'true'); 
-    localStorage.setItem('user', JSON.stringify({ username, email })); // Store email along with username
+    localStorage.setItem('user', JSON.stringify({ username, email }));
     navigate('/dashboard'); // Redirect to dashboard
   };
 
@@ -36,7 +33,7 @@ const Register = () => {
             required
           />
           <input 
-            type="email" // Change type to email
+            type="email" 
             placeholder="Email" 
             value={email} 
             onChange={(e) => setEmail(e.target.value)} 
@@ -61,7 +58,7 @@ const Register = () => {
           />
           <button 
             type="submit" 
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2 transition duration-300"
           >
             Register
           </button>

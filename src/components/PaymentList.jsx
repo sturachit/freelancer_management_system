@@ -11,12 +11,12 @@ const PaymentList = ({ payments, markPaymentAsPaid }) => {
           {payments.map((payment) => (
             <li key={payment.id} className="flex justify-between items-center mb-2">
               <span>
-                Amount: ${payment.amount} - Status: {payment.status}
+                Amount: ${payment.amount.toFixed(2)} - Status: {payment.status}
               </span>
               {payment.status === 'Unpaid' && (
                 <button
                   onClick={() => markPaymentAsPaid(payment.id)}
-                  className="ml-2 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="ml-2 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
                 >
                   Mark as Paid
                 </button>

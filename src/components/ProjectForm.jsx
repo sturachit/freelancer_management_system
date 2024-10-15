@@ -14,6 +14,11 @@ const ProjectForm = ({ addProject }) => {
       status
     };
     addProject(newProject);
+    // Clear form fields after submission
+    resetForm();
+  };
+
+  const resetForm = () => {
     setName('');
     setDueDate('');
     setStatus('Active');
@@ -49,7 +54,7 @@ const ProjectForm = ({ addProject }) => {
       </div>
       <button
         type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
       >
         Add Project
       </button>

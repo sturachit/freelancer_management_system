@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; 
 import ProjectForm from './ProjectForm';
 import PaymentList from './PaymentList';
-import PaymentForm from './PaymentForm'; // Import PaymentForm
+import PaymentForm from './PaymentForm'; 
 
 const Dashboard = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
   const [projects, setProjects] = useState([]);
-  const [payments, setPayments] = useState([]); // Initialize payments state
+  const [payments, setPayments] = useState([]); 
+
 
   const addProject = (newProject) => {
     setProjects([...projects, newProject]);
@@ -33,60 +34,75 @@ const Dashboard = () => {
     setPayments(payments.map(payment => payment.id === id ? { ...payment, status: 'Paid' } : payment));
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('user'); 
-    navigate('/login'); 
+    console.log('Navigating to login...');
+    navigate('/register'); 
   };
+  
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
         <button
           onClick={handleLogout}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
         >
           Logout
         </button>
       </div>
 
-      {/* Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
         {projects.map((project) => (
-          <div key={project.id} className="p-4 bg-white shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold">{project.name}</h3>
-            <p>Due: {project.dueDate}</p>
-            <p>Status: {project.status}</p>
-            <button
-              onClick={() =>
-                updateProjectStatus(
-                  project.id,
-                  project.status === 'Active' ? 'Completed' : 'Active'
-                )
-              }
-              className="text-sm text-white bg-blue-500 hover:bg-blue-700 px-2 py-1 rounded mt-2"
-            >
-              {project.status === 'Active' ? 'Mark as Completed' : 'Mark as Active'}
-            </button>
-            <button
-              onClick={() => deleteProject(project.id)}
-              className="text-sm text-white bg-red-500 hover:bg-red-700 px-2 py-1 rounded ml-2 mt-2"
-            >
-              Delete
-            </button>
+          <div key={project.id} className="p-6 bg-white shadow-lg rounded-lg transition-transform transform hover:scale-105">
+            <h3 className="text-xl font-semibold text-gray-800">{project.name}</h3>
+            <p className="text-gray-600">Due: {project.dueDate}</p>
+            <p className={`text-gray-600 ${project.status === 'Completed' ? 'font-semibold text-green-600' : 'text-red-600'}`}>
+              Status: {project.status}
+            </p>
+            <div className="flex space-x-2 mt-4">
+              <button
+                onClick={() =>
+                  updateProjectStatus(
+                    project.id,
+                    project.status === 'Active' ? 'Completed' : 'Active'
+                  )
+                }
+                className="text-sm text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-300"
+              >
+                {project.status === 'Active' ? 'Mark as Completed' : 'Mark as Active'}
+              </button>
+              <button
+                onClick={() => deleteProject(project.id)}
+                className="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition duration-300"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Project Form */}
-      <ProjectForm addProject={addProject} />
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Add New Project</h2>
+        <ProjectForm addProject={addProject} />
+      </div>
 
       {/* Payment Form */}
-      <PaymentForm addPayment={addPayment} /> {/* Add PaymentForm here */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Record Payment</h2>
+        <PaymentForm addPayment={addPayment} />
+      </div>
 
       {/* Payment List */}
-      <PaymentList payments={payments} markPaymentAsPaid={markPaymentAsPaid} /> {/* Pass payments and function */}
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Payments</h2>
+        <PaymentList payments={payments} markPaymentAsPaid={markPaymentAsPaid} />
+      </div>
     </div>
   );
 };
