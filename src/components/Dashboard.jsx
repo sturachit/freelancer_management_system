@@ -26,7 +26,7 @@ const Dashboard = () => {
   };
 
   const addPayment = (newPayment) => {
-    setPayments([...payments, newPayment]); // Add new payment to the state
+    setPayments([...payments, newPayment]);
   };
 
   const markPaymentAsPaid = (id) => {
@@ -34,9 +34,9 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated'); // Remove authentication flag
-    localStorage.removeItem('user'); // Optionally remove user info
-    navigate('/login'); // Redirect to login page
+    localStorage.removeItem('isAuthenticated'); 
+    localStorage.removeItem('user'); 
+    navigate('/login'); 
   };
 
   return (

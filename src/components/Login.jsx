@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../Slice/authSlice'; 
 
 const Login = () => {
-  const [email, setEmail] = useState(''); // Change username to email
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch(); 
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (email && password) {
-      localStorage.setItem('isAuthenticated', 'true'); 
-      localStorage.setItem('user', JSON.stringify({ email })); 
-      navigate('/dashboard'); 
+      const userData = { email }; 
+
+      dispatch(login(userData));
+      navigate('/dashboard');
     }
   };
 
@@ -37,13 +41,8 @@ const Login = () => {
             className="border w-full p-2 rounded mb-4"
             required
           />
-          <button 
-            type="submit" 
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2"
-          >
-            Login
-          </button>
-        </form>
+          <button type="submit"  className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2">  Login</button>
+</form>
 
         <div className="text-center">
           <span className="text-sm">Don't have an account?</span>
